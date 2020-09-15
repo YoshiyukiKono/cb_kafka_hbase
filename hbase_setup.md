@@ -14,14 +14,10 @@ https://github.com/YoshiyukiKono/SingleNodeCDPCluster
 
 
 ```
-sudo yum install -y git
-
-git clone https://github.com/YoshiyukiKono/SingleNodeCDPCluster
-cd SingleNodeCDPCluster
-```
-
-```
 sudo su
+yum install -y git
 
-./setup.sh aws templates/base.json
+git clone https://github.com/YoshiyukiKono/OneNodeCDHCluster.git
+cd OneNodeCDHCluster
+./setup.sh aws templates/default_template.json
 ```
