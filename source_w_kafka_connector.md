@@ -71,3 +71,22 @@ kafka-console-consumer.sh --bootstrap-server localhost:9092 \
                           --property print.key=true \
                           --topic test-default --from-beginning
 ```
+
+### Start Again
+
+```
+export KAFKA_HOME=/home/ec2-user/kafka/kafka_2.13-2.6.0
+export PATH=$KAFKA_HOME/bin:$PATH
+
+export KAFKA_CONNECT_COUCHBASE_HOME=/home/ec2-user/kafka_connector/couchbaseinc-kafka-connect-couchbase-4.0.0
+```
+```
+zookeeper-server-start.sh $KAFKA_HOME/config/zookeeper.properties
+kafka-server-start.sh $KAFKA_HOME/config/server.properties
+```
+
+```
+env CLASSPATH=$KAFKA_CONNECT_COUCHBASE_HOME/lib/* \
+    connect-standalone.sh $KAFKA_HOME/config/connect-standalone.properties \
+                       $KAFKA_CONNECT_COUCHBASE_HOME/etc/quickstart-couchbase-source.properties
+```
