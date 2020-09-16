@@ -107,8 +107,190 @@ testDataFrame.write
   .save()
 ```
 
-Import path that works
+## Import path that works
+
+```
+sudo -u spark spark-shell --jars /opt/cloudera/parcels/CDH/lib/hbase/hbase-spark.jar,/opt/cloudera/parcels/CDH/lib/hbase/hbase-spark-it.jar,/opt/cloudera/parcels/CDH/lib/hbase/hbase-client.jar
+```
+Important: No 'execution.'
 ```
 scala> import org.apache.spark.sql.datasources.hbase.HBaseTableCatalog
 import org.apache.spark.sql.datasources.hbase.HBaseTableCatalog
+```
+
+```
+import org.apache.spark.sql.{SQLContext, _}
+import org.apache.spark.sql.datasources.hbase._
+import org.apache.spark.{SparkConf, SparkContext}
+import spark.sqlContext.implicits._
+```
+
+```
+def catalog = s"""{
+    |"table":{"namespace":"default", "name":"Contacts"},
+    |"rowkey":"key",
+    |"columns":{
+    |"rowkey":{"cf":"rowkey", "col":"key", "type":"string"},
+    |"officeAddress":{"cf":"Office", "col":"Address", "type":"string"},
+    |"officePhone":{"cf":"Office", "col":"Phone", "type":"string"},
+    |"personalName":{"cf":"Personal", "col":"Name", "type":"string"},
+    |"personalPhone":{"cf":"Personal", "col":"Phone", "type":"string"}
+    |}
+|}""".stripMargin
+```
+
+```
+def withCatalog(cat: String): DataFrame = {
+    spark.sqlContext
+    .read
+    .options(Map(HBaseTableCatalog.tableCatalog->cat))
+    .format("org.apache.hadoop.hbase.spark")
+    .load()
+ }
+```
+
+```
+scala> val df = withCatalog(catalog)
+java.lang.NoClassDefFoundError: org/apache/hadoop/hbase/client/TableDescriptor
+  at org.apache.hadoop.hbase.spark.DefaultSource.createRelation(DefaultSource.scala:70)
+  at org.apache.spark.sql.execution.datasources.DataSource.resolveRelation(DataSource.scala:317)
+  at org.apache.spark.sql.DataFrameReader.loadV1Source(DataFrameReader.scala:223)
+  at org.apache.spark.sql.DataFrameReader.load(DataFrameReader.scala:211)
+  at org.apache.spark.sql.DataFrameReader.load(DataFrameReader.scala:167)
+  at withCatalog(<console>:43)
+  ... 55 elided
+Caused by: java.lang.ClassNotFoundException: org.apache.hadoop.hbase.client.TableDescriptor
+  at java.net.URLClassLoader.findClass(URLClassLoader.java:382)
+  at java.lang.ClassLoader.loadClass(ClassLoader.java:418)
+  at java.lang.ClassLoader.loadClass(ClassLoader.java:351)
+  ... 61 more
+
+```
+https://stackoverflow.com/questions/56364850/i-save-a-dataframe-in-hbase-and-i-get-java-lang-noclassdeffounderror-org-apach
+
+```
+scala> val df = withCatalog(catalog)
+java.lang.NullPointerException
+  at org.apache.hadoop.hbase.spark.HBaseRelation.<init>(DefaultSource.scala:139)
+  at org.apache.hadoop.hbase.spark.DefaultSource.createRelation(DefaultSource.scala:70)
+  at org.apache.spark.sql.execution.datasources.DataSource.resolveRelation(DataSource.scala:317)
+  at org.apache.spark.sql.DataFrameReader.loadV1Source(DataFrameReader.scala:223)
+  at org.apache.spark.sql.DataFrameReader.load(DataFrameReader.scala:211)
+  at org.apache.spark.sql.DataFrameReader.load(DataFrameReader.scala:167)
+  at withCatalog(<console>:38)
+  ... 55 elided
+
+```
+
+https://stackoverflow.com/questions/52372245/hbase-spark-load-data-raise-nullpointerexception-error-scala
+
+```
+sudo -u spark spark-shell --jars /opt/cloudera/parcels/CDH/lib/hbase/hbase-spark.jar,/opt/cloudera/parcels/CDH/lib/hbase/hbase-spark-it.jar,/opt/cloudera/parcels/CDH/lib/hbase/hbase-client.jar,/opt/cloudera/parcels/CDH/lib/hbase/hbase-common.jar
+```
+
+```
+import org.apache.hadoop.hbase.HBaseConfiguration
+import org.apache.hadoop.hbase.spark.HBaseContext
+import org.apache.hadoop.fs.Path
+
+val conf = HBaseConfiguration.create()
+```
+
+```
+sudo -u spark spark-shell --jars /opt/cloudera/parcels/CDH/lib/hbase/hbase-spark.jar,/opt/cloudera/parcels/CDH/lib/hbase/hbase-spark-it.jar,/opt/cloudera/parcels/CDH/lib/hbase/hbase-client.jar,/opt/cloudera/parcels/CDH/lib/hbase/hbase-common.jar,/opt/cloudera/parcels/CDH/lib/hbase/hbase-server.jar,/opt/cloudera/parcels/CDH/lib/hbase/hbase-server.jar,/opt/cloudera/parcels/CDH/lib/hbase/hbase-mapreduce.jar,/opt/cloudera/parcels/CDH/lib/hbase/hbase-shaded-miscellaneous.jar,/opt/cloudera/parcels/CDH/lib/hbase/hbase-protocol.jar,/opt/cloudera/parcels/CDH/lib/hbase/hbase-protocol-shaded.jar,/opt/cloudera/parcels/CDH/lib/hbase/hbase-shaded-protobuf.jar,/opt/cloudera/parcels/CDH/lib/hbase/hbase-shaded-netty.jar
+```
+
+```
+import org.apache.hadoop.hbase.HBaseConfiguration
+import org.apache.hadoop.hbase.spark.HBaseContext
+import org.apache.hadoop.fs.Path
+
+import org.apache.spark.sql.{SQLContext, _}
+import org.apache.spark.sql.datasources.hbase._
+import org.apache.spark.{SparkConf, SparkContext}
+import spark.sqlContext.implicits._
+
+val conf = HBaseConfiguration.create()
+conf.addResource(new Path("/etc/hbase/conf.cloudera.hbase/hbase-site.xml"))
+
+new HBaseContext(sc, conf)
+```
+
+
+```
+def catalog = s"""{
+    |"table":{"namespace":"default", "name":"Contacts"},
+    |"rowkey":"key",
+    |"columns":{
+    |"rowkey":{"cf":"rowkey", "col":"key", "type":"string"},
+    |"officeAddress":{"cf":"Office", "col":"Address", "type":"string"},
+    |"officePhone":{"cf":"Office", "col":"Phone", "type":"string"},
+    |"personalName":{"cf":"Personal", "col":"Name", "type":"string"},
+    |"personalPhone":{"cf":"Personal", "col":"Phone", "type":"string"}
+    |}
+|}""".stripMargin
+
+def withCatalog(cat: String): DataFrame = {
+    spark.sqlContext
+    .read
+    .options(Map(HBaseTableCatalog.tableCatalog->cat))
+    .format("org.apache.hadoop.hbase.spark")
+    .load()
+ }
+```
+
+```
+val df = withCatalog(catalog)
+df.show()
+```
+```
++------+--------------+--------------------+------------+--------------+        
+|rowkey|   officePhone|       officeAddress|personalName| personalPhone|
++------+--------------+--------------------+------------+--------------+
+|  1000|1-425-000-0002|1111 San Gabriel Dr.|   John Dole|1-425-000-0001|
+|  8396|  230-555-0191|5415 San Gabriel Dr.| Calvin Raji|  230-555-0191|
++------+--------------+--------------------+------------+--------------+
+```
+
+### Spark SQL
+```
+scala> df.createTempView("contacts")
+
+scala> spark.sqlContext.sql("select personalName, officeAddress from contacts").show
++------------+--------------------+
+|personalName|       officeAddress|
++------------+--------------------+
+|   John Dole|1111 San Gabriel Dr.|
+| Calvin Raji|5415 San Gabriel Dr.|
++------------+--------------------+
+```
+
+### Insert New Line
+
+```
+case class ContactRecord(
+    rowkey: String,
+    officeAddress: String,
+    officePhone: String,
+    personalName: String,
+    personalPhone: String
+    )
+val newContact = ContactRecord("16891", "40 Ellis St.", "674-555-0110", "John Jackson","230-555-0194")
+
+var newData = new Array[ContactRecord](1)
+newData(0) = newContact
+
+sc.parallelize(newData).toDF.write.options(Map(HBaseTableCatalog.tableCatalog -> catalog, HBaseTableCatalog.newTable -> "5")).format("org.apache.hadoop.hbase.spark").save()
+
+```
+
+```
+scala> df.show()
++------+--------------+--------------------+------------+--------------+
+|rowkey|   officePhone|       officeAddress|personalName| personalPhone|
++------+--------------+--------------------+------------+--------------+
+|  1000|1-425-000-0002|1111 San Gabriel Dr.|   John Dole|1-425-000-0001|
+| 16891|  674-555-0110|        40 Ellis St.|John Jackson|  230-555-0194|
+|  8396|  230-555-0191|5415 San Gabriel Dr.| Calvin Raji|  230-555-0191|
++------+--------------+--------------------+------------+--------------+
 ```
