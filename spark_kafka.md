@@ -49,3 +49,15 @@ writer: org.apache.spark.sql.streaming.DataStreamWriter[org.apache.spark.sql.Row
 Spark Streaming Consumer Java Sample
 
 https://www.sbcloud.co.jp/entry/2019/07/03/kafka_1
+
+### Jar
+
+/opt/cloudera/parcels/CDH/lib/spark/jars/spark-streaming-kafka-0-10_2.11-2.4.0-cdh6.3.2.jar
+
+- org/apache/spark/streaming/kafka010/KafkaRDD.class
+
+https://spark.apache.org/docs/2.2.0/streaming-kafka-0-10-integration.html
+
+## Kafka to HBase Connector (Confluent)
+
+https://docs.confluent.io/current/connect/kafka-connect-hbase/index.html
