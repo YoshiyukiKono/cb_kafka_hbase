@@ -1,4 +1,63 @@
-# Spark HBase 
+# Spark HBase
+
+# HBase
+
+## Test Table
+
+https://docs.microsoft.com/ja-jp/azure/hdinsight/hdinsight-using-spark-query-hbase
+
+```
+hbase shell
+
+```
+
+```
+create 'Contacts', 'Personal', 'Office'
+```
+
+```
+put 'Contacts', '1000', 'Personal:Name', 'John Dole'
+put 'Contacts', '1000', 'Personal:Phone', '1-425-000-0001'
+put 'Contacts', '1000', 'Office:Phone', '1-425-000-0002'
+put 'Contacts', '1000', 'Office:Address', '1111 San Gabriel Dr.'
+put 'Contacts', '8396', 'Personal:Name', 'Calvin Raji'
+put 'Contacts', '8396', 'Personal:Phone', '230-555-0191'
+put 'Contacts', '8396', 'Office:Phone', '230-555-0191'
+put 'Contacts', '8396', 'Office:Address', '5415 San Gabriel Dr.'
+```
+```
+hbase(main):013:0> list
+TABLE                                                                                                                                                                  
+Contacts                                                                                                                                                               
+1 row(s)
+Took 0.0166 seconds                                                                                                                                                    
+=> ["Contacts"]
+hbase(main):014:0> describe 'Contacts'
+Table Contacts is ENABLED                                                                                                                                              
+Contacts                                                                                                                                                               
+COLUMN FAMILIES DESCRIPTION                                                                                                                                            
+{NAME => 'Office', VERSIONS => '1', EVICT_BLOCKS_ON_CLOSE => 'false', NEW_VERSION_BEHAVIOR => 'false', KEEP_DELETED_CELLS => 'FALSE', CACHE_DATA_ON_WRITE => 'false', D
+ATA_BLOCK_ENCODING => 'NONE', TTL => 'FOREVER', MIN_VERSIONS => '0', REPLICATION_SCOPE => '0', BLOOMFILTER => 'ROW', CACHE_INDEX_ON_WRITE => 'false', IN_MEMORY => 'fal
+se', CACHE_BLOOMS_ON_WRITE => 'false', PREFETCH_BLOCKS_ON_OPEN => 'false', COMPRESSION => 'NONE', BLOCKCACHE => 'true', BLOCKSIZE => '65536'}                          
+{NAME => 'Personal', VERSIONS => '1', EVICT_BLOCKS_ON_CLOSE => 'false', NEW_VERSION_BEHAVIOR => 'false', KEEP_DELETED_CELLS => 'FALSE', CACHE_DATA_ON_WRITE => 'false',
+ DATA_BLOCK_ENCODING => 'NONE', TTL => 'FOREVER', MIN_VERSIONS => '0', REPLICATION_SCOPE => '0', BLOOMFILTER => 'ROW', CACHE_INDEX_ON_WRITE => 'false', IN_MEMORY => 'f
+alse', CACHE_BLOOMS_ON_WRITE => 'false', PREFETCH_BLOCKS_ON_OPEN => 'false', COMPRESSION => 'NONE', BLOCKCACHE => 'true', BLOCKSIZE => '65536'}                        
+2 row(s)
+Took 0.0711 seconds                                                                                                                                                                                                                                                                                                 
+hbase(main):016:0> get 'Contacts', '1000', 'Personal'
+COLUMN                                     CELL                                                                                                                        
+ Personal:Name                             timestamp=1600232442490, value=John Dole                                                                                    
+ Personal:Phone                            timestamp=1600232453090, value=1-425-000-0001                                                                               
+1 row(s)
+Took 0.5829 seconds                                                                                                                                                    
+hbase(main):017:0> get 'Contacts', '1000', 'Office'
+COLUMN                                     CELL                                                                                                                        
+ Office:Address                            timestamp=1600232453476, value=1111 San Gabriel Dr.                                                                         
+ Office:Phone                              timestamp=1600232453254, value=1-425-000-0002                                                                               
+1 row(s)
+Took 0.1204 seconds                                                                                                                                                    
+hbase(main):018:0> 
+```
 
 # Spark
 
