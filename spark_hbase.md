@@ -294,3 +294,17 @@ scala> df.show()
 |  8396|  230-555-0191|5415 San Gabriel Dr.| Calvin Raji|  230-555-0191|
 +------+--------------+--------------------+------------+--------------+
 ```
+
+#### Check on HBase (Shell)
+
+```
+hbase(main):018:0> get 'Contacts', '16891'
+COLUMN                                     CELL                                                                                                                        
+ Office:Address                            timestamp=1600239454960, value=40 Ellis St.                                                                                 
+ Office:Phone                              timestamp=1600239454960, value=674-555-0110                                                                                 
+ Personal:Name                             timestamp=1600239454960, value=John Jackson                                                                                 
+ Personal:Phone                            timestamp=1600239454960, value=230-555-0194                                                                                 
+1 row(s)
+Took 0.0247 seconds                                                                                                                                                    
+hbase(main):019:0> 
+```
