@@ -45,3 +45,7 @@ org.apache.spark.sql.AnalysisException: Queries with streaming sources must be e
 scala> val writer = selectedDS.writeStream
 writer: org.apache.spark.sql.streaming.DataStreamWriter[org.apache.spark.sql.Row] = org.apache.spark.sql.streaming.DataStreamWriter@2ab53df6
 ```
+
+Spark Streaming Consumer Java Sample
+
+https://www.sbcloud.co.jp/entry/2019/07/03/kafka_1
