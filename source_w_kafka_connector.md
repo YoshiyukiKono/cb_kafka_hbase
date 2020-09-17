@@ -99,6 +99,19 @@ kafka-server-start.sh $KAFKA_HOME/config/server.properties
 ```
 
 ```
+nohup zookeeper-server-start.sh $KAFKA_HOME/config/zookeeper.properties > /tmp/kafka-zookeeper.out 2>&1 &
+nohup kafka-server-start.sh $KAFKA_HOME/config/server.properties > /tmp/kafka-server.out 2>&1 &
+tail -f /tmp/kafka-server.out
+```
+
+```
+[2020-09-17 00:55:24,631] INFO Kafka version: 2.6.0 (org.apache.kafka.common.utils.AppInfoParser)
+[2020-09-17 00:55:24,631] INFO Kafka commitId: 62abe01bee039651 (org.apache.kafka.common.utils.AppInfoParser)
+[2020-09-17 00:55:24,631] INFO Kafka startTimeMs: 1600304124627 (org.apache.kafka.common.utils.AppInfoParser)
+[2020-09-17 00:55:24,632] INFO [KafkaServer id=0] started (kafka.server.KafkaServer)
+```
+
+```
 env CLASSPATH=$KAFKA_CONNECT_COUCHBASE_HOME/lib/* \
     connect-standalone.sh $KAFKA_HOME/config/connect-standalone.properties \
                        $KAFKA_CONNECT_COUCHBASE_HOME/etc/quickstart-couchbase-source.properties
