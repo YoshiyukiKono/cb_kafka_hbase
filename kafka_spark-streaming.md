@@ -113,6 +113,12 @@ vi common/pom.xml
 ```
 <jackson.version>2.9.9</jackson.version>
 ```
+
+https://stackoverflow.com/questions/45490778/pass-system-property-to-spark-submit-and-read-file-from-classpath-or-custom-path
+
+```
+$ spark-submit --master spark://127.0.0.1:7077 --driver-java-options "-Dconfig=./config/common.conf" streaming/target/spark-streaming-0.1.jar
+```
 ## Reference
 
 Using the CDH 6 Maven Repository
