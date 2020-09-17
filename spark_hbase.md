@@ -308,3 +308,26 @@ COLUMN                                     CELL
 Took 0.0247 seconds                                                                                                                                                    
 hbase(main):019:0> 
 ```
+
+## Call from Scala
+
+```
+[ERROR] /home/centos/github/kafka-spark-streaming-example/streaming/src/main/scala/com/test/App.scala:149: error: value toDF is not a member of org.apache.spark.rdd.RDD[com.test.App.ContactRecord]
+[ERROR] Error occurred in an application involving default arguments.
+```
+https://stackoverflow.com/questions/33704831/value-todf-is-not-a-member-of-org-apache-spark-rdd-rdd
+
+
+
+now i found the reason, you should define case class in the object and outof the main function. look at here
+
+Ok, I finally fixed the issue. 2 things needed to be done:
+
+Import implicits: Note that this should be done only after an instance of org.apache.spark.sql.SQLContext is created. It should be written as:
+```
+val sqlContext= new org.apache.spark.sql.SQLContext(sc)
+
+import sqlContext.implicits._
+```
+Move case class outside of the method: case class, by use of which you define the schema of the DataFrame, should be defined outside of the method needing it. You can read more about it here: https://issues.scala-lang.org/browse/SI-6649
+
