@@ -40,13 +40,79 @@ Default locale: en_US, platform encoding: UTF-8
 OS name: "linux", version: "3.10.0-1062.12.1.el7.x86_64", arch: "amd64", family: "unix"
 ```
 
+## MySQL for Test
+
+```
+sudo yum install -y mysql-server
+sudo systemctl start mysqld
+```
+If you install Cloudera Cluster by the setup script, MySQL/MariaDB is already installed. In this case, use "cloudera" for password.
+
+```
+$ mysql -u root -p
+Enter password: 
+Welcome to the MariaDB monitor.  Commands end with ; or \g.
+Your MariaDB connection id is 1526
+Server version: 10.1.46-MariaDB MariaDB Server
+
+Copyright (c) 2000, 2018, Oracle, MariaDB Corporation Ab and others.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+MariaDB [(none)]> 
+```
+
 ## Sample Project
 ```
 git clone https://github.com/trK54Ylmz/kafka-spark-streaming-example.git
 cd kafka-spark-streaming-example
+ mvn clean package -DskipTests
 ```
 
+### Sample DB
+```
+CREATE DATABASE IF NOT EXISTS dashboard_test;
 
+USE dashboard_test;
+
+CREATE TABLE IF NOT EXISTS events (
+ market VARCHAR(24) NOT NULL DEFAULT '',
+ rate FLOAT DEFAULT NULL,
+ dt DATETIME NOT NULL,
+ PRIMARY KEY (market, dt)
+)
+ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+```
+
+```
+show tables
+```
+
+### Spark
+
+CDH6.3: Spark 2.4.0
+
+kafka · spark streaming example: Spark 2.0.2
+
+```
+Caused by: com.fasterxml.jackson.databind.JsonMappingException: Incompatible Jackson version: 2.10.0
+```
+
+https://mvnrepository.com/artifact/org.apache.spark/spark-core_2.12/2.4.0
+https://mvnrepository.com/artifact/com.fasterxml.jackson.module/jackson-module-scala_2.13/2.11.2
+
+```
+vi common/pom.xml 
+```
+```
+<jackson.version>2.10.0</jackson.version>
+```
+```
+<jackson.version>2.11.2</jackson.version>
+```
+```
+<jackson.version>2.9.9</jackson.version>
+```
 ## Reference
 
 Using the CDH 6 Maven Repository
