@@ -123,6 +123,11 @@ $ spark-submit --master spark://127.0.0.1:7077 --driver-java-options "-Dconfig=.
 ```
 spark-submit --master local[*]  --driver-java-options "-Dconfig=./config/common.conf" streaming/target/spark-streaming-0.1.jar
 ```
+
+Add `--driver-java-options "-Dconfig=./config/common.conf -Dlog4j.configuration=file:log4j.xml"`
+```
+spark-submit --master local[*]  --driver-java-options "-Dconfig=./config/common.conf -Dlog4j.configuration=file:log4j.xml" streaming/target/spark-streaming-0.1.jar
+```
 ## Reference
 
 Using the CDH 6 Maven Repository
