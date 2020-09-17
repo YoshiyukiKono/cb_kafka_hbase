@@ -119,6 +119,10 @@ https://stackoverflow.com/questions/45490778/pass-system-property-to-spark-submi
 ```
 $ spark-submit --master spark://127.0.0.1:7077 --driver-java-options "-Dconfig=./config/common.conf" streaming/target/spark-streaming-0.1.jar
 ```
+
+```
+spark-submit --master local[*]  --driver-java-options "-Dconfig=./config/common.conf" streaming/target/spark-streaming-0.1.jar
+```
 ## Reference
 
 Using the CDH 6 Maven Repository
