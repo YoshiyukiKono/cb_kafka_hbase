@@ -32,3 +32,15 @@ CREATE TABLE IF NOT EXISTS events (
 )
 ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 ```
+
+## Kafka Connector
+
+
+```
+vi $KAFKA_CONNECT_COUCHBASE_HOME/etc/quickstart-couchbase-source.propertie
+```
+```
+couchbase.bucket=events
+couchbase.username=Administrator
+couchbase.password=couchbase
+```
