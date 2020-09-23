@@ -1,5 +1,9 @@
 # Couchbase Kafka Connector, and Kafka
 
+## Use-Case
+
+
+
 ## Related Project
 
 - Kafka, Spark Streaming, and HBase
