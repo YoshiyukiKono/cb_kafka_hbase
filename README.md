@@ -2,6 +2,9 @@
 
 ## Related Project
 
+- Kafka, Spark Streaming, and HBase
+-- https://github.com/YoshiyukiKono/kafka_spark-streaming_hbase
+
 ## Install
 
 ### ZooKeeper
