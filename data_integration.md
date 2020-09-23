@@ -11,6 +11,9 @@ cbimport json -c couchbase://127.0.0.1 -u Administrator -p couchbase \
 {"type":"europe","value":158.33551}
 ```
 
+```
+cbimport json -c couchbase://127.0.0.1 -u Administrator -p couchbase  -b events -d file://output.txt  -f lines -g '#UUID#'
+```
 ## HBase
 
 ```
