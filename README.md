@@ -1,6 +1,6 @@
-# cb_kafka_hbase
+# Couchbase Kafka Spark Streaming HBase
 
-
+## Kafka Connector
 https://docs.couchbase.com/kafka-connector/4.0/quickstart.html
 
 
@@ -13,7 +13,3 @@ https://phoenix.apache.org/kafka.html
 
 # Option B
 
-- CB > Kafka > Spark > HBase
-- CB > Kafka > Spark > HDFS > Impala/Hive
-- CB > Kafka > NiFi > HBase
-- CB > Kafka > NiFi > HDFS > Impala/Hive
