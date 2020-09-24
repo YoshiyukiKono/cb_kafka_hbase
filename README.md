@@ -1,6 +1,8 @@
 # Couchbase Kafka Connector, and Kafka
 
-## Use-Case
+## Concept Overview
+
+![Concept Diagram](images/concept-diagram.jpc Concept Diagram)
 
 
 
