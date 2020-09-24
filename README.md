@@ -9,7 +9,7 @@
 ## Project Coverage and Related Project
 
 ![Coverage Diagram](images/coverage-1.jpg)
-The remaining part is covered by [another project](https://github.com/YoshiyukiKono/kafka_spark-streaming_hbase)
+The rest is covered by [another project](https://github.com/YoshiyukiKono/kafka_spark-streaming_hbase)
 
 ## Install
   
