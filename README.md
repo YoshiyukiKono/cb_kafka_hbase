@@ -2,7 +2,7 @@
 
 ## Concept Overview
 
-![Concept Diagram](images/concept-diagram.jpc Concept Diagram)
+![Concept Diagram](images/concept-diagram.jpg)
 
 
 
