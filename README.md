@@ -27,32 +27,9 @@ I confirmed with the following environment. I installed Apache Kafka and Zookeep
 
 [couchbase-aws-scripts](https://github.com/YoshiyukiKono/couchbase-aws-scripts)
 
-## Install
-  
-### ZooKeeper
+## Kafka and Kafka Connector Setup
 
-### Kafka
-
-### Couchbase
-
-### Couchbase Kafka Connector
-
-### Usage
-
-#### Preparation
-
-##### Couchbase Bucket
-
-##### ZooKeeper
-
-##### Kafka
-
-##### Kafka Connector
-
-### Check
-
-#### Consumer
-
+[kafka_setup](./kafka_setup.md)
 
 ## References
 ### Couchbase Kafka Connector
